@@ -5,6 +5,8 @@ class Ecommerce {
         this.api = "http://localhost/e-bestcommerce_mudey/backend/api/";
         this.actions = ['orders', 'users', 'category', 'products'];
 
+        this.data = [];
+
         this.initRouter();
         this.initDataApp();
     }
@@ -26,8 +28,13 @@ class Ecommerce {
                     document.getElementsByClassName('container-fluid')[0].innerHTML = data;
                     //tester si le click est sur les produits
                     if (action == 'products') {
-                        alert("action");
                         this.loadProducts();
+                    }else if (action == 'category') {
+                        this.loadCategories();
+                    }else if(action == 'orders') {
+                        this.loadOrders();
+                    }else if(action == 'users'){
+                        this.loadUsers();
                     }
                 })
 
@@ -51,7 +58,9 @@ class Ecommerce {
 
             }).then((response) =>{
                 if (response.status == 200) {
-                    localStorage.setItem(action, JSON.stringify(response.result));
+                    //Charger les données dans le localStorage ou le tableau si tout se passe bien
+                    this.data.push({name: action, data: response.result});
+                    // localStorage.setItem(action, JSON.stringify(response.result));
                 } else {
                     
                 }
@@ -60,15 +69,15 @@ class Ecommerce {
     }
 
 
-    //function to getData permettant de parcourir les données en local
-    getData(entity){
-        alert("ok");
+    //function to getData permettant de parcourir et de recuperer les données en local
+    getData(action){
         //tester si les données sont définies sinon tableau vide
-        return JSON.parse(localStorage.getItem(entity)) ? JSON.parse(localStorage.getItem(entity)) : [];
+        var object = this.data.find(element => element.name == action);
+        return object.data;
+        // return JSON.parse(localStorage.getItem(entity)) ? JSON.parse(localStorage.getItem(entity)) : [];
     }
     
     loadProducts(){
-        alert("ok");
         $('#dataTable').DataTable( {
             data: this.getData('products'),
             columns: [
@@ -78,6 +87,42 @@ class Ecommerce {
                 { data: 'price' },
                 { data: 'stock' },
                 { data: 'createdAt' }
+            ]
+        } );
+    }
+
+    loadCategories(){
+        $('#dataTable').DataTable( {
+            data: this.getData('category'),
+            columns: [
+                { data: 'idCategory' },
+                { data: 'name' }
+            ]
+        } );
+    }
+
+    loadOrders(){
+        $('#dataTable').DataTable( {
+            data: this.getData('orders'),
+            columns: [
+                { data: 'idOrder' },
+                { data: 'idUser' },
+                { data: 'idProduct' },
+                { data: 'quantity' },
+                { data: 'price' },
+                { data: 'createdAt' }
+            ]
+        } );
+    }
+
+    loadUsers(){
+        $('#dataTable').DataTable( {
+            data: this.getData('users'),
+            columns: [
+                { data: 'idUser' },
+                { data: 'email' },
+                { data: 'firstname' },
+                { data: 'lastname' }
             ]
         } );
     }

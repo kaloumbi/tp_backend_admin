@@ -1,5 +1,10 @@
 <h1>PRODUCTS</h1>
 
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Add Product
+</button>
+
 <div class="card-body">
     <div class="table-responsive">
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" >
@@ -31,4 +36,56 @@
         </table>
     </div>
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+        <form action="">
+            <div class="form-row">
+                <div class="col">
+                    <label for="">Name : </label>
+                    <input onchange="localStorage.setItem(this.name, this.value)" type="text" name="name" class="form-control">
+                </div>
+
+                <div class="col">
+                    <label for="">Description : </label>
+                    <textarea onchange="localStorage.setItem(this.name, this.value)" name="description" class="form-control"></textarea>
+                </div>
+
+                <div class="col">
+                    <label for="">Price : </label>
+                    <input onchange="localStorage.setItem(this.name, this.value)" type="number" name="price" class="form-control">
+                </div>
+
+                <div class="col">
+                    <label for="">Stock : </label>
+                    <input onchange="localStorage.setItem(this.name, this.value)" type="number" name="stock" class="form-control">
+                </div>
+
+                <div class="col">
+                    <label for="">Image : </label>
+                    <input onchange="localStorage.setItem(this.name, this.value)" type="file" name="name" class="form-control">
+                </div>
+
+            </div>
+        </form>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button onclick="addProduct()" type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
